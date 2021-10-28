@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print, unused_local_variable, avoid_function_literals_in_foreach_calls, unnecessary_null_comparison
+
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
