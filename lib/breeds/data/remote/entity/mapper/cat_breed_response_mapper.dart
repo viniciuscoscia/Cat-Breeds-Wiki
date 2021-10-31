@@ -3,8 +3,8 @@ import 'package:cats_database/breeds/domain/model/cat.dart';
 import 'package:cats_database/helpers/string_utils.dart';
 
 extension CatResponseMapper on List<CatBreedsResponse> {
-  List<Cat> toDomainEntity(List<CatBreedsResponse> catsResponse) {
-    return catsResponse.map((e) =>
+  List<Cat> toDomainEntity() {
+    return map((e) =>
         Cat(
             name: e.name.orEmpty(),
             adaptability: e.adaptability.orZero(),

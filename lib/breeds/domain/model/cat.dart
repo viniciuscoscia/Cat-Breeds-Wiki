@@ -1,5 +1,5 @@
 class Cat {
-  final String name;
+  String name;
   final Weight weight;
   final String id;
   final String cfaUrl;
