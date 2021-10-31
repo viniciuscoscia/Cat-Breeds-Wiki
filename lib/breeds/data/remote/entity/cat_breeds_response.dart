@@ -5,7 +5,7 @@ part 'cat_breeds_response.g.dart';
 @JsonSerializable()
 class CatBreedsResponse {
   final String? name;
-  final Weight? weight;
+  final WeightResponse? weight;
   final String? id;
   @JsonKey(name: "cfa_url")
   final String? cfaUrl;
@@ -60,7 +60,7 @@ class CatBreedsResponse {
   final int? hypoallergenic;
   @JsonKey(name: "reference_image_id")
   final String? referenceImageId;
-  final Image? image;
+  final ImageResponse? image;
 
   CatBreedsResponse({
       this.name,
@@ -107,24 +107,24 @@ class CatBreedsResponse {
 }
 
 @JsonSerializable()
-class Weight {
+class WeightResponse {
   final String? imperial;
   final String? metric;
 
-  Weight({this.imperial, this.metric});
+  WeightResponse({this.imperial, this.metric});
 
-  factory Weight.fromJson(Map<String, dynamic> json) => _$WeightFromJson(json);
-  Map<String, dynamic> toJson() => _$WeightToJson(this);
+  factory WeightResponse.fromJson(Map<String, dynamic> json) => _$WeightResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$WeightResponseToJson(this);
 }
 
 @JsonSerializable()
-class Image {
+class ImageResponse {
   final String? id;
   final int? width;
   final int? height;
   final String? url;
 
-  Image({this.id, this.width, this.height, this.url});
-  factory Image.fromJson(Map<String, dynamic> json) => _$ImageFromJson(json);
-  Map<String, dynamic> toJson() => _$ImageToJson(this);
+  ImageResponse({this.id, this.width, this.height, this.url});
+  factory ImageResponse.fromJson(Map<String, dynamic> json) => _$ImageResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$ImageResponseToJson(this);
 }

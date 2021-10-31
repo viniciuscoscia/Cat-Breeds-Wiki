@@ -1,23 +1,31 @@
 import 'package:flutter/material.dart';
 
-class CatBreedsPageWidget extends StatefulWidget {
-  const CatBreedsPageWidget({Key? key, required this.title}) : super(key: key);
+class CatBreedsScreen extends StatefulWidget {
+  const CatBreedsScreen({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
-  State<CatBreedsPageWidget> createState() => _CatBreedsPageWidgetState();
+  State<CatBreedsScreen> createState() => _CatBreedsScreenState();
 }
 
-class _CatBreedsPageWidgetState extends State<CatBreedsPageWidget> {
+class _CatBreedsScreenState extends State<CatBreedsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: const Center(
-        child: Text('Thiago viadão :D'),
+      body: GridView.count(
+        crossAxisCount: 2,
+        children: List.generate(100, (index) {
+          return Center(
+            child: Text(
+              'Item $index',
+              style: Theme.of(context).textTheme.headline5,
+            ),
+          );
+        }),
       ),
     );
   }

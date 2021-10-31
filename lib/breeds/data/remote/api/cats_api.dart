@@ -5,8 +5,8 @@ import 'package:retrofit/retrofit.dart';
 part 'cats_api.g.dart';
 
 @RestApi(baseUrl: "https://api.thecatapi.com/v1/")
-abstract class CatsApi {
-  factory CatsApi(Dio dio, {String baseUrl}) = _CatsApi;
+abstract class CatApi {
+  factory CatApi(Dio dio, {String baseUrl}) = _CatApi;
 
   @GET("/breeds")
   Future<List<CatBreedsResponse>> getCatBreeds();

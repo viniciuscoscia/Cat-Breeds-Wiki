@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'breeds/presenter/main/cat_breeds_widget.dart';
 
-
 class CatApp extends StatelessWidget {
   const CatApp({Key? key}) : super(key: key);
 
@@ -13,7 +12,7 @@ class CatApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.amber,
       ),
-      home: const CatBreedsPageWidget(title: 'Cat Breeds'),
+      home: const CatBreedsScreen(title: 'Cat Breeds'),
     );
   }
 }
