@@ -10,7 +10,7 @@ class CatApp extends StatelessWidget {
     return MaterialApp(
       title: 'CatApp',
       theme: ThemeData(
-        primarySwatch: Colors.amber,
+        primarySwatch: Colors.grey,
       ),
       home: const CatBreedsScreen(title: 'Cat Breeds'),
     );

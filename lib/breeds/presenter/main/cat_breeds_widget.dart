@@ -1,4 +1,8 @@
+import 'dart:ui';
+
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cats_database/breeds/domain/model/cat.dart';
+import 'package:cats_database/breeds/presenter/cat_details/cat_details_screen.dart';
 import 'package:cats_database/breeds/presenter/main/cat_breeds_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -30,27 +34,93 @@ class _CatBreedsScreenState extends State<CatBreedsScreen> {
       ),
       body: Observer(
         builder: (_) => GridView.count(
+          childAspectRatio: 1.2,
           crossAxisCount: 2,
           children: List.generate(_viewModel.catList.length, (index) {
             var cat = _viewModel.catList[index];
-            return Card(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Expanded(
-                      child: CachedNetworkImage(
-                        imageUrl: cat.image.url,
-                      ),
+            var borderRadius = 5.0;
+            return InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CatDetailsScreen(cat: cat,),
                   ),
-                  Text(
-                    cat.name,
-                    style: Theme.of(context).textTheme.bodyText1,
-                  )
-                ],
+                );
+              },
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(borderRadius),
+                ),
+                elevation: 5.0,
+                child: Stack(
+                  children: [
+                    CatImageWidget(borderRadius: borderRadius, cat: cat),
+                    CatNameTextWidget(cat: cat)
+                  ],
+                ),
               ),
             );
           }),
+        ),
+      ),
+    );
+  }
+}
+
+class CatImageWidget extends StatelessWidget {
+  const CatImageWidget({
+    Key? key,
+    required this.borderRadius,
+    required this.cat,
+  }) : super(key: key);
+
+  final double borderRadius;
+  final Cat cat;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(borderRadius),
+      child: CachedNetworkImage(
+        width: double.infinity,
+        height: double.infinity,
+        fit: BoxFit.cover,
+        imageUrl: cat.image.url,
+        errorWidget: (context, url, error) =>
+            const Icon(Icons.error),
+      ),
+    );
+  }
+}
+
+class CatNameTextWidget extends StatelessWidget {
+  const CatNameTextWidget({
+    Key? key,
+    required this.cat,
+  }) : super(key: key);
+
+  final Cat cat;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 4),
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: Container(
+          decoration: const BoxDecoration(
+              color: Color.fromARGB(210, 255, 255, 255),
+              borderRadius: BorderRadius.all(Radius.circular(5))),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 4, right: 4),
+            child: Text(
+              cat.name,
+              style: const TextStyle(
+                color: Colors.black,
+              ),
+            ),
+          ),
         ),
       ),
     );
