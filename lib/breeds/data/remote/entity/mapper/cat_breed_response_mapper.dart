@@ -1,6 +1,6 @@
 import 'package:cats_database/breeds/data/remote/entity/cat_breeds_response.dart';
 import 'package:cats_database/breeds/domain/model/cat.dart';
-import 'package:cats_database/helpers/string_utils.dart';
+import 'package:cats_database/helpers/utils.dart';
 
 extension CatResponseMapper on List<CatBreedsResponse> {
   List<Cat> toDomainEntity() {
@@ -23,7 +23,7 @@ extension CatResponseMapper on List<CatBreedsResponse> {
             healthIssues: e.healthIssues.orZero(),
             hypoallergenic: e.hypoallergenic.orZero(),
             id: e.id.orEmpty(),
-            indoor: e.indoor.orZero(),
+            indoor: e.indoor.toBoolean(),
             intelligence: e.intelligence.orZero(),
             lap: e.lap.orZero(),
             lifeSpan: e.lifeSpan.orEmpty(),
@@ -42,22 +42,9 @@ extension CatResponseMapper on List<CatBreedsResponse> {
             vetstreetUrl: e.vetstreetUrl.orEmpty(),
             vocalisation: e.vocalisation.orZero(),
             wikipediaUrl: e.wikipediaUrl.orEmpty(),
-            image: e.image.toDomainEntity(),
+            imageUrls: e.image?.url != null ? <String>[e.image!.url!] : <String>[],
             weight: e.weight.toDomainEntity()
         )).toList();
-  }
-}
-
-extension ImageResponseMapper on ImageResponse? {
-  Image toDomainEntity() {
-    if (this == null) {
-      return const Image();
-    }
-
-    return Image(id: this!.id.orEmpty(),
-        height: this!.height.orZero(),
-        url: this!.url.orEmpty(),
-        width: this!.width.orZero());
   }
 }
 

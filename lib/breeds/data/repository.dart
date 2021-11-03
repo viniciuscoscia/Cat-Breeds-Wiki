@@ -7,5 +7,8 @@ class CatsRepositoryImpl implements CatsRepository {
   final RemoteDataSource _remoteDataSource = GetIt.I();
 
   @override
-  Future<List<Cat>> fetchCatBreeds() => _remoteDataSource.fetchCatBreeds();
+  Future<List<Cat>> getCatBreeds() => _remoteDataSource.getCatBreeds();
+
+  @override
+  Future<List<String>> getCatImagesByBreedId(String breedId) => _remoteDataSource.getCatImagesByBreedId(breedId);
 }

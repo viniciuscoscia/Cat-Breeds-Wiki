@@ -10,6 +10,8 @@ final _getIt = GetIt.instance;
 final _dio = Dio();
 
 void registerDataInstances() {
+  _dio.interceptors.add(LogInterceptor(responseBody: true));
+
   _getIt.registerSingleton<CatApi>(CatApi(_dio));
   _getIt.registerSingleton<RemoteDataSource>(CatsRemoteDataSourceImpl());
   _getIt.registerSingleton<CatsRepository>(CatsRepositoryImpl());

@@ -86,7 +86,7 @@ class CatImageWidget extends StatelessWidget {
         width: double.infinity,
         height: double.infinity,
         fit: BoxFit.cover,
-        imageUrl: cat.image.url,
+        imageUrl: cat.imageUrls[0],
         errorWidget: (context, url, error) =>
             const Icon(Icons.error),
       ),

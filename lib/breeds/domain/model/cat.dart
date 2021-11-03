@@ -1,5 +1,5 @@
 class Cat {
-  String name;
+  final String name;
   final Weight weight;
   final String id;
   final String cfaUrl;
@@ -11,7 +11,7 @@ class Cat {
   final String countryCode;
   final String description;
   final String lifeSpan;
-  final int indoor;
+  final bool indoor;
   final int lap;
   final String altNames;
   final int adaptability;
@@ -36,7 +36,7 @@ class Cat {
   final String wikipediaUrl;
   final int hypoallergenic;
   final String referenceImageId;
-  final Image image;
+  final List<String> imageUrls;
 
   Cat(
       {this.name = "",
@@ -51,7 +51,7 @@ class Cat {
       this.countryCode = "",
       this.description = "",
       this.lifeSpan = "",
-      this.indoor = 0,
+      this.indoor = false,
       this.lap = 0,
       this.altNames = "",
       this.adaptability = 0,
@@ -76,7 +76,7 @@ class Cat {
       this.wikipediaUrl = "",
       this.hypoallergenic = 0,
       this.referenceImageId = "",
-      this.image = const Image()});
+      this.imageUrls = const <String>[]});
 }
 
 class Weight {
@@ -84,15 +84,4 @@ class Weight {
   final String metric;
 
   const Weight({this.imperial = "", this.metric = ""});
-  // const Weight.empty(): imperial = "", metric = "";
-}
-
-class Image {
-  final String id;
-  final int width;
-  final int height;
-  final String url;
-
-  const Image({this.id = "", this.width = 0, this.height = 0, this.url = ""});
-  // const Image.empty(): id = "", width = 0, height = 0, url = "";
 }
