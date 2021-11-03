@@ -55,7 +55,36 @@ class _CatBreedsScreenState extends State<CatBreedsScreen> {
                 elevation: 5.0,
                 child: Stack(
                   children: [
-                    CatImageWidget(borderRadius: borderRadius, cat: cat),
+                    CarouselSlider(
+                        items: cat.imageUrls.map((image) => ClipRRect(
+                          borderRadius: BorderRadius.circular(borderRadius),
+                          child: Hero(
+                            tag: '${cat.id}${cat.imageUrls.indexOf(image)}',
+                            child: Image.network(image,
+                              width: double.infinity,
+                              height: double.infinity,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        )).toList(),
+                        options: CarouselOptions(
+                          height: 400,
+                          aspectRatio: 1/1,
+                          viewportFraction: 1,
+                          initialPage: 0,
+                          enableInfiniteScroll: true,
+                          reverse: false,
+                          autoPlay: true,
+                          autoPlayInterval: const Duration(seconds: 10),
+                          autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                          autoPlayCurve: Curves.fastOutSlowIn,
+                          enlargeCenterPage: true,
+                          onPageChanged: (index, reason) {
+                            cat.currentImageIndex = index;
+                          },
+                          scrollDirection: Axis.horizontal,
+                        )
+                    ),
                     CatNameTextWidget(cat: cat)
                   ],
                 ),
@@ -64,48 +93,6 @@ class _CatBreedsScreenState extends State<CatBreedsScreen> {
           }),
         ),
       ),
-    );
-  }
-}
-
-class CatImageWidget extends StatelessWidget {
-  const CatImageWidget({
-    Key? key,
-    required this.borderRadius,
-    required this.cat,
-  }) : super(key: key);
-
-  final double borderRadius;
-  final Cat cat;
-
-  @override
-  Widget build(BuildContext context) {
-    return CarouselSlider(
-        items: cat.imageUrls.map((image) => ClipRRect(
-          borderRadius: BorderRadius.circular(borderRadius),
-          child: Image.network(image,
-            width: double.infinity,
-            height: double.infinity,
-            fit: BoxFit.cover,
-          ),
-        )).toList(),
-        options: CarouselOptions(
-          height: 400,
-          aspectRatio: 1/1,
-          viewportFraction: 1,
-          initialPage: 0,
-          enableInfiniteScroll: true,
-          reverse: false,
-          autoPlay: true,
-          autoPlayInterval: const Duration(seconds: 10),
-          autoPlayAnimationDuration: const Duration(milliseconds: 800),
-          autoPlayCurve: Curves.fastOutSlowIn,
-          enlargeCenterPage: true,
-          onPageChanged: (index, reason) {
-
-          },
-          scrollDirection: Axis.horizontal,
-        )
     );
   }
 }

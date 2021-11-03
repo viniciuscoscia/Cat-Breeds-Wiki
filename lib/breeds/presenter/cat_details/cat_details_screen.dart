@@ -15,7 +15,6 @@ class CatDetailsScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Cat Breed Details'),
         ),
-        backgroundColor: Colors.white70,
         body: SingleChildScrollView(
           child: _CatDetailsScreenBody(cat: cat),
         ));
@@ -132,10 +131,13 @@ class _CatDetailsScreenBody extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(imageBorderRadius),
-                  child: CachedNetworkImage(
-                    fit: BoxFit.cover,
-                    height: imageHeight,
-                    imageUrl: cat.imageUrls[0],
+                  child: Hero(
+                    tag: '${cat.id}${cat.currentImageIndex}',
+                    child: Image.network(
+                      cat.imageUrls[cat.currentImageIndex],
+                      fit: BoxFit.cover,
+                      height: imageHeight,
+                    ),
                   ),
                 ),
               ),

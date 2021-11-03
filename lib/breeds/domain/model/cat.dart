@@ -37,6 +37,7 @@ class Cat {
   final int hypoallergenic;
   final String referenceImageId;
   final List<String> imageUrls;
+  int currentImageIndex = 0;
 
   Cat(
       {this.name = "",
