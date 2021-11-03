@@ -1,8 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cats_database/breeds/domain/model/cat.dart';
 import 'package:cats_database/custom_widgets/rating_bar.dart';
 import 'package:cats_database/helpers/utils.dart';
 import 'package:flutter/material.dart';
+
+import 'fullscreen_widget.dart';
 
 class CatDetailsScreen extends StatelessWidget {
   final Cat cat;
@@ -129,14 +130,21 @@ class _CatDetailsScreenBody extends StatelessWidget {
               color: Colors.white,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(imageBorderRadius),
-                  child: Hero(
-                    tag: '${cat.id}${cat.currentImageIndex}',
-                    child: Image.network(
-                      cat.imageUrls[cat.currentImageIndex],
-                      fit: BoxFit.cover,
-                      height: imageHeight,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) {
+                      return FullScreenWidget(cat);
+                    }));
+                  },
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(imageBorderRadius),
+                    child: Hero(
+                      tag: '${cat.id}${cat.currentImageIndex}',
+                      child: Image.network(
+                        cat.imageUrls[cat.currentImageIndex],
+                        fit: BoxFit.cover,
+                        height: imageHeight,
+                      ),
                     ),
                   ),
                 ),

@@ -44,8 +44,7 @@ class _CatBreedsScreenState extends State<CatBreedsScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => CatDetailsScreen(cat: cat,),
-                  ),
+                      builder: (context) => CatDetailsScreen(cat: cat)),
                 );
               },
               child: Card(
@@ -55,37 +54,8 @@ class _CatBreedsScreenState extends State<CatBreedsScreen> {
                 elevation: 5.0,
                 child: Stack(
                   children: [
-                    CarouselSlider(
-                        items: cat.imageUrls.map((image) => ClipRRect(
-                          borderRadius: BorderRadius.circular(borderRadius),
-                          child: Hero(
-                            tag: '${cat.id}${cat.imageUrls.indexOf(image)}',
-                            child: Image.network(image,
-                              width: double.infinity,
-                              height: double.infinity,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        )).toList(),
-                        options: CarouselOptions(
-                          height: 400,
-                          aspectRatio: 1/1,
-                          viewportFraction: 1,
-                          initialPage: 0,
-                          enableInfiniteScroll: true,
-                          reverse: false,
-                          autoPlay: true,
-                          autoPlayInterval: const Duration(seconds: 10),
-                          autoPlayAnimationDuration: const Duration(milliseconds: 800),
-                          autoPlayCurve: Curves.fastOutSlowIn,
-                          enlargeCenterPage: true,
-                          onPageChanged: (index, reason) {
-                            cat.currentImageIndex = index;
-                          },
-                          scrollDirection: Axis.horizontal,
-                        )
-                    ),
-                    CatNameTextWidget(cat: cat)
+                    _CatImageCarousel(cat: cat, borderRadius: borderRadius),
+                    _CatNameTextWidget(cat: cat)
                   ],
                 ),
               ),
@@ -97,8 +67,69 @@ class _CatBreedsScreenState extends State<CatBreedsScreen> {
   }
 }
 
-class CatNameTextWidget extends StatelessWidget {
-  const CatNameTextWidget({
+class _CatImageCarousel extends StatelessWidget {
+  const _CatImageCarousel({
+    Key? key,
+    required this.cat,
+    required this.borderRadius,
+  }) : super(key: key);
+
+  final Cat cat;
+  final double borderRadius;
+
+  @override
+  Widget build(BuildContext context) {
+    return CarouselSlider(
+        items: cat.imageUrls
+            .map((image) => ClipRRect(
+                  borderRadius: BorderRadius.circular(borderRadius),
+                  child: Hero(
+                    tag: '${cat.id}${cat.imageUrls.indexOf(image)}',
+                    child: Image.network(
+                      image,
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent? loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child;
+                        }
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes!
+                                : null,
+                          ),
+                        );
+                      },
+                      width: double.infinity,
+                      height: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ))
+            .toList(),
+        options: CarouselOptions(
+          height: 400,
+          aspectRatio: 1 / 1,
+          viewportFraction: 1,
+          initialPage: 0,
+          enableInfiniteScroll: true,
+          reverse: false,
+          autoPlay: true,
+          autoPlayInterval: const Duration(seconds: 10),
+          autoPlayAnimationDuration: const Duration(milliseconds: 800),
+          autoPlayCurve: Curves.fastOutSlowIn,
+          enlargeCenterPage: true,
+          onPageChanged: (index, reason) {
+            cat.currentImageIndex = index;
+          },
+          scrollDirection: Axis.horizontal,
+        ));
+  }
+}
+
+class _CatNameTextWidget extends StatelessWidget {
+  const _CatNameTextWidget({
     Key? key,
     required this.cat,
   }) : super(key: key);

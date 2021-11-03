@@ -15,5 +15,5 @@ abstract class CatApi {
   @GET("/images/search")
   Future<List<ImagesByBreedResponse>> getImagesByBreedId(
       @Query("breed_ids") String breedId,
-      {@Query("limit") int limit = 5});
+      {@Query("limit") int limit = 10});
 }

@@ -24,11 +24,12 @@ abstract class CatBreedsViewModelBase with Store {
 
   @action
   fetchCatImagesById(Cat cat) async {
-    var images = cat.imageUrls;
-    images.addAll(await _getCatImagesByBreedIdUseCase(cat.id));
-    images = images.toSet().toList();
-    cat.imageUrls.clear();
-    cat.imageUrls.addAll(images);
+    var images = (await _getCatImagesByBreedIdUseCase(cat.id)).toSet().toList();
+    for (var image in images) {
+      if (!cat.imageUrls.contains(image)) {
+        cat.imageUrls.add(image);
+      }
+    }
     catList = catList;
   }
 }
