@@ -24,8 +24,14 @@ abstract class CatBreedsViewModelBase with Store {
 
   @action
   fetchCatImagesById(Cat cat) async {
-    var images = await _getCatImagesByBreedIdUseCase(cat.id);
+    var images = cat.imageUrls;
+    images.addAll(await _getCatImagesByBreedIdUseCase(cat.id));
+    images = images.toSet().toList();
+    if (cat.imageUrls.isNotEmpty) {
+      cat.imageUrls.removeAt(0);
+    }
     cat.imageUrls.addAll(images);
+
     catList = catList; //To notify observer new images has arrived
   }
 }
