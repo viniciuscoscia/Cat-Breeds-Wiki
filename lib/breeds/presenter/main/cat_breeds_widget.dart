@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cats_database/breeds/domain/model/cat.dart';
 import 'package:cats_database/breeds/presenter/cat_details/cat_details_screen.dart';
 import 'package:cats_database/breeds/presenter/main/cat_breeds_view_model.dart';
@@ -80,16 +80,32 @@ class CatImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(borderRadius),
-      child: CachedNetworkImage(
-        width: double.infinity,
-        height: double.infinity,
-        fit: BoxFit.cover,
-        imageUrl: cat.imageUrls[0],
-        errorWidget: (context, url, error) =>
-            const Icon(Icons.error),
-      ),
+    return CarouselSlider(
+        items: cat.imageUrls.map((image) => ClipRRect(
+          borderRadius: BorderRadius.circular(borderRadius),
+          child: Image.network(image,
+            width: double.infinity,
+            height: double.infinity,
+            fit: BoxFit.cover,
+          ),
+        )).toList(),
+        options: CarouselOptions(
+          height: 400,
+          aspectRatio: 1/1,
+          viewportFraction: 1,
+          initialPage: 0,
+          enableInfiniteScroll: true,
+          reverse: false,
+          autoPlay: true,
+          autoPlayInterval: const Duration(seconds: 10),
+          autoPlayAnimationDuration: const Duration(milliseconds: 800),
+          autoPlayCurve: Curves.fastOutSlowIn,
+          enlargeCenterPage: true,
+          onPageChanged: (index, reason) {
+
+          },
+          scrollDirection: Axis.horizontal,
+        )
     );
   }
 }

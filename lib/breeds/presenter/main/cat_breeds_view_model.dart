@@ -26,5 +26,6 @@ abstract class CatBreedsViewModelBase with Store {
   fetchCatImagesById(Cat cat) async {
     var images = await _getCatImagesByBreedIdUseCase(cat.id);
     cat.imageUrls.addAll(images);
+    catList = catList; //To notify observer new images has arrived
   }
 }
