@@ -27,11 +27,8 @@ abstract class CatBreedsViewModelBase with Store {
     var images = cat.imageUrls;
     images.addAll(await _getCatImagesByBreedIdUseCase(cat.id));
     images = images.toSet().toList();
-    if (cat.imageUrls.isNotEmpty) {
-      cat.imageUrls.removeAt(0);
-    }
+    cat.imageUrls.clear();
     cat.imageUrls.addAll(images);
-
-    catList = catList; //To notify observer new images has arrived
+    catList = catList;
   }
 }
